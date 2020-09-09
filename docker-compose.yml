@@ -60,6 +60,19 @@ services:
       - TZ=Europ/Berlin
     networks:
       - main
+  nzbhydra:
+    container_name: nzbhydra
+    image: linuxserver/nzbhydra2:latest
+    restart: unless-stopped
+    volumes:
+      - ./nzbhydra/config:/config
+      - ./nzbhydra/downloads:/downloads
+    ports:
+      - 5076:5076
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
   torproxy:
     container_name: torproxy
     image: dperson/torproxy:latest
