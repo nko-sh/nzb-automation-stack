@@ -1,0 +1,70 @@
+version: '2.0'
+
+services:
+  radarr:
+    container_name: radarr
+    image: linuxserver/radarr:latest
+    restart: unless-stopped
+    volumes:
+      - ./radarr/data:/config
+      - ./radarr/downloads:/downloads
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+    ports:
+      - 7878:7878
+    networks:
+      - main
+  sonarr:
+    container_name: sonarr
+    image: linuxserver/sonarr:preview
+    restart: unless-stopped
+    volumes:
+      - ./sonarr/data:/config
+      - ./sonarr/downloads:/downloads
+    ports:
+      - 8989:8989
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+  nzbget:
+    container_name: nzbget
+    image: linuxserver/nzbget:latest
+    restart: unless-stopped
+    volumes:
+      - ./nzbget/data:/config
+      - ./nzbget/downloads:/downloads
+    ports:
+      - 6789:6789
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+    networks:
+      - main
+  ombi:
+    container_name: ombi
+    image: linuxserver/ombi:latest
+    restart: unless-stopped
+    volumes:
+      - ./ombi/config:/config
+    ports:
+      - 3579:3579
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europ/Berlin
+    networks:
+      - main
+  torproxy:
+    container_name: torproxy
+    image: dperson/torproxy:latest
+    networks:
+      - main
+
+networks:
+  main:
+    external:
+      name: main-network
