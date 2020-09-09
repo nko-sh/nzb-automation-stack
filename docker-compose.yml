@@ -29,6 +29,8 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Berlin
+    networks:
+      - main
   nzbget:
     container_name: nzbget
     image: linuxserver/nzbget:latest
