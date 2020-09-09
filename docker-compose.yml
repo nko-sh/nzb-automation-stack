@@ -73,6 +73,8 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Berlin
+    networks:
+      - main
   torproxy:
     container_name: torproxy
     image: dperson/torproxy:latest
